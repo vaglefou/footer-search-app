@@ -1,9 +1,11 @@
+require('dotenv').config();
 const express = require('express')
 const puppeteer = require('puppeteer')
 const axios = require('axios')
 
 const app = express()
 app.use(express.json())
+
 
 app.post('/api/search', async (req,res) => {
     const { query } = req.body
