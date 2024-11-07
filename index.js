@@ -6,6 +6,9 @@ const axios = require('axios')
 const app = express()
 app.use(express.json())
 
+const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+const CX_ID = process.env.CX_ID;
+
 
 app.post('/api/search', async (req,res) => {
     const { query } = req.body
@@ -22,11 +25,22 @@ app.post('/api/search', async (req,res) => {
 })
 
 async function searchWeb(query) {
-    //Temporary mock URLs for testing
-    return [
-        'https://www.cptpapadakisphoto.gr/',
-        'https://kris-karras.gr/'
-    ];
+    try {
+        const response = await axios.get('https://www.googleapis.com/customsearch/v1', {
+            params: {
+                key: GOOGLE_API_KEY,
+                cx: CX_ID,
+                q: query,
+            },
+        });
+
+        const searchResults = response.data.items || [];
+        const urls = searchResults.map(item => item.link);
+        return urls;
+    } catch (error) {
+        console.error('Σφάλμα στην αναζήτηση στο Google API:', error);
+        return [];
+    }
 }
 
 async function getFooterCompanyInfo(url) {
