@@ -18,3 +18,11 @@ app.post('/api/search', async (req,res) => {
 
     res.json(footerData)
 })
+
+async function searchWeb(query) {
+    //Temporary mock URLs for testing
+    return [
+        'https://example1.com',
+        'https://example2.com'
+    ];
+}
