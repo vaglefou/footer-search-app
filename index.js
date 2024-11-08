@@ -31,6 +31,7 @@ async function searchWeb(query) {
                 key: GOOGLE_API_KEY,
                 cx: CX_ID,
                 q: query,
+                num: 8,
             },
         });
 
